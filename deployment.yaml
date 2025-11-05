@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-tomcat-maven
+  labels:
+    app: java-tomcat-maven
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: java-tomcat-maven
+  template:
+    metadata:
+      labels:
+        app: java-tomcat-maven
+    spec:
+      containers:
+        - name: java-tomcat-maven
+          image: sthuthi22/javatomcat:v1   # ✅ corrected tag
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JAVA_OPTS
+              value: "-Xms512m -Xmx1024m"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-tomcat-maven-service
+  labels:
+    app: java-tomcat-maven
+spec:
+  selector:
+    app: java-tomcat-maven
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
