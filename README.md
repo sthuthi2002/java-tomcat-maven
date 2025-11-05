@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # java-tomcat-maven-example
 
 This is an example ready-to-deploy java web application built for Tomcat using Maven and webapp-runner.
@@ -52,3 +53,6 @@ The application will be available on `http://localhost:8080`.
      </plugins>
    </build>
    ```
+=======
+# java-tomcat-maven
+>>>>>>> 262bf16756b31d827d74e9c8c281a3871d59d399
